@@ -17,9 +17,16 @@ Codex skill for transforming technical engineering sketch concepts into parametr
 - `assets/product-spec.template.json` - structured product specification template.
 - `scripts/create_project_structure.py` - scaffold helper for new product projects.
 - `scripts/generate_freecad_base.py` - base FreeCAD model generation helper.
+- `scripts/run_freecad_smoke.py` - smoke-test runner that discovers `FreeCADCmd` and runs scaffold, CAD generation, and printability validation.
 - `scripts/export_freecad_files.py` - export helper for native, STEP, and STL outputs.
 - `scripts/validate_printability.py` - printability validation helper.
 
 ## Requirement
 
-FreeCAD must be installed locally. Headless generation expects `FreeCADCmd` to be available in the system PATH.
+FreeCAD must be installed locally. For a full smoke test, run:
+
+```powershell
+python scripts/run_freecad_smoke.py
+```
+
+The runner checks `FREECADCMD`, `FREECAD_CMD`, `FREECADCMD_PATH`, PATH, Windows uninstall registry entries, and common install locations. If discovery still fails, set `FREECADCMD` to the full `freecadcmd.exe` path.

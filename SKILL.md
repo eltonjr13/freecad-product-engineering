@@ -94,10 +94,11 @@ Before final response, validate:
 If the FreeCAD MCP server is unavailable:
 
 1. Do not switch to Blender.
-2. Try `FreeCADCmd` or `freecadcmd` with the Python scripts in `scripts/`.
-3. If FreeCAD is not available in PATH, generate or update the spec, assumptions, CAD plan, and printability report.
-4. Provide the exact command the user can run after installing or exposing FreeCAD in PATH.
-5. Keep all output structure ready for the next run.
+2. Try `python scripts/run_freecad_smoke.py`; it discovers `FreeCADCmd` from environment variables, PATH, Windows registry entries, and common install locations.
+3. If needed, run `scripts/generate_freecad_base.py` directly with Python; it can bootstrap FreeCAD modules from a discovered local install.
+4. If FreeCAD is not discoverable, generate or update the spec, assumptions, CAD plan, and printability report.
+5. Provide the exact command the user can run after installing FreeCAD or setting `FREECADCMD` to the full executable path.
+6. Keep all output structure ready for the next run.
 
 ## Final Checklist
 

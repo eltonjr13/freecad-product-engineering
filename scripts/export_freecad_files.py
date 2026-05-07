@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import sys
 from pathlib import Path
 
 
@@ -10,10 +11,24 @@ def require_freecad():
             import Import as StepExport  # type: ignore
         except Exception:
             import ImportGui as StepExport  # type: ignore
-    except Exception as exc:
-        raise RuntimeError(
-            "This script must run inside FreeCADCmd/freecadcmd or a Python environment with FreeCAD modules."
-        ) from exc
+    except Exception:
+        scripts_dir = Path(__file__).resolve().parent
+        if str(scripts_dir) not in sys.path:
+            sys.path.insert(0, str(scripts_dir))
+        try:
+            from freecad_locator import bootstrap_freecad_python
+
+            bootstrap_freecad_python()
+            import FreeCAD as App  # type: ignore
+            import Mesh  # type: ignore
+            try:
+                import Import as StepExport  # type: ignore
+            except Exception:
+                import ImportGui as StepExport  # type: ignore
+        except Exception as exc:
+            raise RuntimeError(
+                "This script must run inside FreeCADCmd/freecadcmd or with FreeCAD discoverable by FREECADCMD, PATH, or the Windows uninstall registry."
+            ) from exc
     return App, StepExport, Mesh
 
 
